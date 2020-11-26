@@ -16,7 +16,7 @@ class CountdownTimer {
       const startTime = Date.now();
       const deltaTime = this.targetDate - startTime;
 
-      if (deltaTime >= 0) {
+      if (deltaTime <= 0) {
         clearInterval(timerId);
         return;
       }
