@@ -12,9 +12,15 @@ class CountdownTimer {
   }
 
   start() {
-    setInterval(() => {
+    const timerId = setInterval(() => {
       const startTime = Date.now();
       const deltaTime = this.targetDate - startTime;
+
+      if (deltaTime >= 0) {
+        clearInterval(timerId);
+        return;
+      }
+
       const time = this.getTimeComponents(deltaTime);
       this.updateClockface(time);
     }, 1000);
