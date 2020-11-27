@@ -33,7 +33,7 @@ class CountdownTimer {
       clearInterval(timerId);
       this.updateClockface(0);
       const blockTimer = document.querySelector(this.selector);
-      blockTimer.textContent = 'Таймер остановился';
+      blockTimer.textContent = 'Happy new year!!';
     }
   }
 
@@ -56,6 +56,6 @@ class CountdownTimer {
 
 const timer = new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Jul 17, 2021'),
+  targetDate: new Date('Dec 31, 2020'),
 });
 timer.start();
