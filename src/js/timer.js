@@ -7,23 +7,34 @@ const refs = {
 
 class CountdownTimer {
   constructor({ selector, targetDate }) {
-    this.selector = document.querySelector(selector);
-    this.targetDate = targetDate.getTime();
+    this.selector = selector;
+    this.targetDate = targetDate;
   }
 
   start() {
+    const startTime = Date.now();
+    let deltaTime = this.targetDate.getTime() - startTime;
+    this.updateClockface(this.getTimeComponents(deltaTime));
+
+    this.startSetInterval(deltaTime);
+  }
+
+  startSetInterval(deltaTime) {
     const timerId = setInterval(() => {
-      const startTime = Date.now();
-      const deltaTime = this.targetDate - startTime;
-
-      if (deltaTime <= 0) {
-        clearInterval(timerId);
-        return;
-      }
-
+      deltaTime -= 1000;
       const time = this.getTimeComponents(deltaTime);
       this.updateClockface(time);
     }, 1000);
+
+    this.stopTimer(deltaTime, timerId);
+  }
+  stopTimer(deltaTime, timerId) {
+    if (deltaTime <= 0) {
+      clearInterval(timerId);
+      this.updateClockface(0);
+      const blockTimer = document.querySelector(this.selector);
+      blockTimer.textContent = 'Таймер остановился';
+    }
   }
 
   getTimeComponents(time) {
