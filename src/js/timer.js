@@ -26,6 +26,8 @@ class CountdownTimer {
       this.updateClockface(time);
       this.stopTimer(deltaTime, timerId);
     }, 1000);
+
+    this.stopTimer(deltaTime, timerId);
   }
   stopTimer(deltaTime, timerId) {
     if (deltaTime <= 0) {
