@@ -14,8 +14,11 @@ class CountdownTimer {
   start() {
     const startTime = Date.now();
     let deltaTime = this.targetDate.getTime() - startTime;
-    this.updateClockface(this.getTimeComponents(deltaTime));
 
+    if (deltaTime <= 0) {
+      this.initTimer();
+    }
+    this.updateClockface(this.getTimeComponents(deltaTime));
     this.startSetInterval(deltaTime);
   }
 
@@ -26,16 +29,17 @@ class CountdownTimer {
       this.updateClockface(time);
       this.stopTimer(deltaTime, timerId);
     }, 1000);
-
-    this.stopTimer(deltaTime, timerId);
   }
   stopTimer(deltaTime, timerId) {
     if (deltaTime <= 0) {
       clearInterval(timerId);
-      this.updateClockface(0);
-      const blockTimer = document.querySelector(this.selector);
-      blockTimer.textContent = 'Happy new year!!';
+      this.initTimer();
     }
+  }
+  initTimer() {
+    this.updateClockface(0);
+    const blockTimer = document.querySelector(this.selector);
+    blockTimer.textContent = 'Happy new year!!';
   }
 
   getTimeComponents(time) {
@@ -57,7 +61,7 @@ class CountdownTimer {
 
 const timer = new CountdownTimer({
   selector: '#timer-1',
-  targetDate: new Date('Dec 31 2020'),
+  targetDate: new Date('Dec 31 2020'), //2020,10,28,15,56  Dec 31 2020
 });
 
 timer.start();
